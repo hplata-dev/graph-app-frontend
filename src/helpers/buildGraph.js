@@ -1,8 +1,32 @@
 const buildGraph = (data) => {
   // 1) collect unique node values
+  const datasetSet = new Set(data.map(({ dataset }) => dataset));
+  const datasetArray = Array.from(datasetSet);
+  const datasetToId = {};
+  datasetArray.forEach((dataset, idx) => {
+    datasetToId[dataset] = idx;
+  });
+
   const nodeSet = new Set();
-  data.forEach(({ source_node, target_node }) => {
+  const nodeValues = new Map();
+  const nodeTitles = new Map();
+  const nodeDatasets = new Map();
+  data.forEach(({ source_node, target_node, dataset }) => {
     nodeSet.add(source_node);
+
+    if (!nodeValues.has(source_node)) {
+      nodeValues.set(source_node, 1);
+    } else {
+      nodeValues.set(source_node, nodeValues.get(source_node) + 1);
+    }
+
+    if (!nodeDatasets.has(source_node)) {
+      nodeDatasets.set(source_node, datasetToId[dataset]);
+    }
+
+    if (!nodeTitles.has(source_node)) {
+      nodeTitles.set(source_node, source_node);
+    }
     nodeSet.add(target_node);
   });
 
@@ -19,6 +43,8 @@ const buildGraph = (data) => {
   const nodes = nodesArray.map((node, idx) => ({
     id: idx,
     label: node,
+    value: nodeValues.get(node) || 0,
+    group: nodeDatasets.get(node) || 0,
   }));
 
   // 5) build edges with vis’s required keys: from & to
