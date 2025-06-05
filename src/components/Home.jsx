@@ -2,25 +2,21 @@ import React, { useState } from 'react';
 import FormCard from './FormCard';
 import GraphCanvas from './GraphCanvas';
 import { DndContext, useDraggable } from '@dnd-kit/core';
-import { CSS } from '@dnd-kit/utilities'; // Helper for transforms
+import { CSS } from '@dnd-kit/utilities';
 
-// This is a wrapper component to make FormCard draggable and control its position.
 function DraggableItem({ id, position, children }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
       id: id,
     });
 
-  // Apply the current position and the transform during drag
   const style = {
-    position: 'absolute', // Essential for positioning
+    position: 'absolute',
     left: position.x,
     top: position.y,
-    transform: CSS.Transform.toString(transform), // Smooth visual drag
-    zIndex: 10, // Ensure it's above the GraphCanvas
+    transform: CSS.Transform.toString(transform),
+    zIndex: 10,
     cursor: isDragging ? 'grabbing' : 'grab',
-    // You can add other styles, e.g., for when it's being dragged
-    // boxShadow: isDragging ? '0px 4px 15px rgba(0,0,0,0.2)' : 'none',
   };
 
   return (
@@ -32,8 +28,7 @@ function DraggableItem({ id, position, children }) {
 
 export default function Home() {
   const [graph, setGraph] = useState({ nodes: [], edges: [] });
-  const [formCardPosition, setFormCardPosition] = useState({ x: 50, y: 50 }); 
-
+  const [formCardPosition, setFormCardPosition] = useState({ x: 50, y: 50 });
 
   function handleDragEnd(event) {
     const { active, delta } = event;

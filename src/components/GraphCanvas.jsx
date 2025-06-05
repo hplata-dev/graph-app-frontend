@@ -52,6 +52,14 @@ export default function GraphCanvas({ graph }) {
         forceDirection: 'horizontal',
         roundness: 0.3,
       },
+      font: {
+        color: '#333333',
+        size: 12, 
+        face: 'Arial',
+        background: 'rgba(255, 255, 255, 0.7)', 
+        strokeWidth: 0, 
+        align: 'middle', 
+      },
     },
     physics: {
       barnesHut: {
