@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useGetGraphsQuery, useLazyGetGraphQuery } from "../redux/api/graphApi";
-import buildGraph from "../helpers/buildGraph";
+import React, { useEffect, useState } from 'react';
+import { useGetGraphsQuery, useLazyGetGraphQuery } from '../redux/api/graphApi';
+import buildGraph from '../helpers/buildGraph';
+import toast from 'react-hot-toast';
 
 export default function FormCard({ setGraph }) {
   const { data: graphs, isLoading: isLoadingGraphs } = useGetGraphsQuery();
-  const [graphId, setGraphId] = useState("");
+  const [graphId, setGraphId] = useState('');
 
   const [getGraph, { data: graph, isLoading: isLoadingGraph }] =
     useLazyGetGraphQuery();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!graphId) {
+      toast.error('Please select a graph');
+      return;
+    }
     getGraph(graphId);
   };
 
@@ -47,7 +53,7 @@ export default function FormCard({ setGraph }) {
             className="btn btn-primary"
             disabled={isLoadingGraph}
           >
-            {isLoadingGraph ? "Loading..." : "Select"}
+            {isLoadingGraph ? 'Loading...' : 'Select'}
           </button>
         </form>
       </div>
