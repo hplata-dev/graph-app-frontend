@@ -1,13 +1,13 @@
-import React from "react";
-import { Outlet, Link, useLocation } from "react-router-dom";
+import React from 'react';
+import { Outlet, Link, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
   const location = useLocation();
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container">
+      <nav className="navbar navbar-expand-lg py-4 py-lg-0 shadow">
+        <div className="container px-4">
           <Link className="navbar-brand" to="/">
             Graph App
           </Link>
@@ -27,17 +27,7 @@ export default function Navbar() {
               <li className="nav-item">
                 <Link
                   className={`nav-link ${
-                    location.pathname === "/" ? "active" : ""
-                  }`}
-                  to="/"
-                >
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className={`nav-link ${
-                    location.pathname === "/create" ? "active" : ""
+                    location.pathname === '/create' ? 'active' : ''
                   }`}
                   to="/create"
                 >
@@ -47,7 +37,7 @@ export default function Navbar() {
               <li className="nav-item">
                 <Link
                   className={`nav-link ${
-                    location.pathname === "/about" ? "active" : ""
+                    location.pathname === '/about' ? 'active' : ''
                   }`}
                   to="/about"
                 >
