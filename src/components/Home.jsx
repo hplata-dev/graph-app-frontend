@@ -3,6 +3,7 @@ import FormCard from './FormCard';
 import GraphCanvas from './GraphCanvas';
 import { DndContext, useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
+import SearchNode from './SearchNode';
 
 function DraggableItem({ id, position, children }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
@@ -29,12 +30,25 @@ function DraggableItem({ id, position, children }) {
 export default function Home() {
   const [graph, setGraph] = useState({ nodes: [], edges: [] });
   const [formCardPosition, setFormCardPosition] = useState({ x: 50, y: 50 });
+  const [searchNodePosition, setSearchNodePosition] = useState({
+    x: 200,
+    y: 200,
+  });
+
+  const [network, setNetwork] = useState(null);
 
   function handleDragEnd(event) {
     const { active, delta } = event;
 
     if (active.id === 'form-card-draggable') {
       setFormCardPosition((prevPosition) => ({
+        x: prevPosition.x + delta.x,
+        y: prevPosition.y + delta.y,
+      }));
+    }
+
+    if (active.id === 'search-node-draggable') {
+      setSearchNodePosition((prevPosition) => ({
         x: prevPosition.x + delta.x,
         y: prevPosition.y + delta.y,
       }));
@@ -61,10 +75,13 @@ export default function Home() {
             zIndex: 1,
           }}
         >
-          <GraphCanvas graph={graph} />
+          <GraphCanvas graph={graph} setNetwork={setNetwork} />
         </div>
         <DraggableItem id="form-card-draggable" position={formCardPosition}>
           <FormCard setGraph={setGraph} />
+        </DraggableItem>
+        <DraggableItem id="search-node-draggable" position={searchNodePosition}>
+          <SearchNode graph={graph} network={network} />
         </DraggableItem>
       </div>
     </DndContext>

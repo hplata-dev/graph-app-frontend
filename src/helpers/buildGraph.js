@@ -15,9 +15,9 @@ const buildGraph = (data) => {
     nodeSet.add(target_node);
 
     if (!nodeValues.has(source_node)) {
-      nodeValues.set(source_node, 1);
+      nodeValues.set(source_node, 10);
     } else {
-      nodeValues.set(source_node, nodeValues.get(source_node) + 1);
+      nodeValues.set(source_node, nodeValues.get(source_node) + 10);
     }
     if (!nodeDatasets.has(source_node)) {
       nodeDatasets.set(source_node, datasetToId[dataset]);

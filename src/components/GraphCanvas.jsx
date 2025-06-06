@@ -1,12 +1,11 @@
 import React from 'react';
 import Graph from 'react-vis-graph-wrapper';
 
-export default function GraphCanvas({ graph }) {
+export default function GraphCanvas({ graph, setNetwork }) {
   const options = {
     layout: { hierarchical: false, improvedLayout: true },
     nodes: {
       shape: 'dot',
-      // size: 16,
       borderWidth: 2,
       borderWidthSelected: 4,
       color: {
@@ -20,6 +19,10 @@ export default function GraphCanvas({ graph }) {
           background: '#00ddff',
           border: '#003344',
         },
+      },
+      scaling: {
+        min: 15,
+        max: 100,
       },
       font: {
         color: '#222222',
@@ -54,11 +57,11 @@ export default function GraphCanvas({ graph }) {
       },
       font: {
         color: '#333333',
-        size: 12, 
+        size: 12,
         face: 'Arial',
-        background: 'rgba(255, 255, 255, 0.7)', 
-        strokeWidth: 0, 
-        align: 'middle', 
+        background: 'rgba(255, 255, 255, 0.7)',
+        strokeWidth: 0,
+        align: 'middle',
       },
     },
     physics: {
@@ -86,6 +89,9 @@ export default function GraphCanvas({ graph }) {
         graph={graph}
         options={options}
         style={{ width: '100%', height: '100%' }}
+        getNetwork={(network) => {
+          setNetwork(network);
+        }}
       />
     </div>
   );
