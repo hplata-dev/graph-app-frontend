@@ -1,14 +1,20 @@
-import React from 'react';
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import React from "react";
+import { Outlet, Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const location = useLocation();
 
   return (
-    <>
-      <nav className="navbar navbar-expand-lg py-4 py-lg-0 shadow">
+    <div className="min-vh-100 d-flex flex-column">
+      <nav
+        className="navbar navbar-expand-lg py-4 py-lg-0 shadow"
+        style={{
+          zIndex: 1030,
+          backgroundColor: "#0070D2", // Salesforce Brand Blue
+        }}
+      >
         <div className="container px-4">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand text-white fw-bold" to="/">
             Graph App
           </Link>
           <button
@@ -27,8 +33,8 @@ export default function Navbar() {
               <li className="nav-item">
                 <Link
                   className={`nav-link ${
-                    location.pathname === '/create' ? 'active' : ''
-                  }`}
+                    location.pathname === "/create" ? "active fw-bold" : ""
+                  } text-white`}
                   to="/create"
                 >
                   Create Graph
@@ -37,8 +43,8 @@ export default function Navbar() {
               <li className="nav-item">
                 <Link
                   className={`nav-link ${
-                    location.pathname === '/about' ? 'active' : ''
-                  }`}
+                    location.pathname === "/about" ? "active fw-bold" : ""
+                  } text-white`}
                   to="/about"
                 >
                   About
@@ -48,9 +54,9 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-      <div className="container mt-4">
+      <div className="flex-grow-1">
         <Outlet />
       </div>
-    </>
+    </div>
   );
 }

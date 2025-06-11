@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useGetGraphsQuery, useLazyGetGraphQuery } from '../redux/api/graphApi';
-import buildGraph from '../helpers/buildGraph';
-import toast from 'react-hot-toast';
+import React, { useEffect, useState } from "react";
+import { useGetGraphsQuery, useLazyGetGraphQuery } from "../redux/api/graphApi";
+import buildGraph from "../helpers/buildGraph";
+import toast from "react-hot-toast";
 
 export default function FormCard({ setGraph }) {
   const { data: graphs, isLoading: isLoadingGraphs } = useGetGraphsQuery();
-  const [graphId, setGraphId] = useState('');
+  const [graphId, setGraphId] = useState("");
 
   const [getGraph, { data: graph, isLoading: isLoadingGraph }] =
     useLazyGetGraphQuery();
@@ -14,7 +14,7 @@ export default function FormCard({ setGraph }) {
     e.preventDefault();
 
     if (!graphId) {
-      toast.error('Please select a graph');
+      toast.error("Please select a graph");
       return;
     }
     getGraph(graphId);
@@ -28,12 +28,13 @@ export default function FormCard({ setGraph }) {
   }, [graph, setGraph]);
 
   return (
-    <div className="card">
-      <div className="card-body ">
+    <div className="card shadow-sm border-0">
+      <div className="card-body">
         <form onSubmit={handleSubmit} className="d-flex gap-2">
           <select
-            className="form-select"
+            className="form-select border-primary"
             onChange={(e) => setGraphId(e.target.value)}
+            style={{ borderColor: "#0070D2" }}
           >
             {isLoadingGraphs ? (
               <option value="">Loading...</option>
@@ -50,10 +51,11 @@ export default function FormCard({ setGraph }) {
           </select>
           <button
             type="submit"
-            className="btn btn-primary"
+            className="btn text-white"
+            style={{ backgroundColor: "#0070D2" }}
             disabled={isLoadingGraph}
           >
-            {isLoadingGraph ? 'Loading...' : 'Select'}
+            {isLoadingGraph ? "Loading..." : "Select"}
           </button>
         </form>
       </div>

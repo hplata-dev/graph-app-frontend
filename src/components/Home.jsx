@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import FormCard from './FormCard';
-import GraphCanvas from './GraphCanvas';
-import { DndContext, useDraggable } from '@dnd-kit/core';
-import { CSS } from '@dnd-kit/utilities';
-import SearchNode from './SearchNode';
+import React, { useState } from "react";
+import FormCard from "./FormCard";
+import GraphCanvas from "./GraphCanvas";
+import { DndContext, useDraggable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
+import SearchNode from "./SearchNode";
 
 function DraggableItem({ id, position, children }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
@@ -12,16 +12,21 @@ function DraggableItem({ id, position, children }) {
     });
 
   const style = {
-    position: 'absolute',
+    position: "absolute",
     left: position.x,
     top: position.y,
     transform: CSS.Transform.toString(transform),
-    zIndex: 10,
-    cursor: isDragging ? 'grabbing' : 'grab',
+    cursor: isDragging ? "grabbing" : "grab",
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+    <div
+      ref={setNodeRef}
+      className="position-absolute"
+      style={style}
+      {...listeners}
+      {...attributes}
+    >
       {children}
     </div>
   );
@@ -40,14 +45,14 @@ export default function Home() {
   function handleDragEnd(event) {
     const { active, delta } = event;
 
-    if (active.id === 'form-card-draggable') {
+    if (active.id === "form-card-draggable") {
       setFormCardPosition((prevPosition) => ({
         x: prevPosition.x + delta.x,
         y: prevPosition.y + delta.y,
       }));
     }
 
-    if (active.id === 'search-node-draggable') {
+    if (active.id === "search-node-draggable") {
       setSearchNodePosition((prevPosition) => ({
         x: prevPosition.x + delta.x,
         y: prevPosition.y + delta.y,
@@ -57,32 +62,21 @@ export default function Home() {
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <div
-        style={{
-          position: 'relative',
-          width: '100vw',
-          height: '100vh',
-          overflow: 'hidden',
-        }}
-      >
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            zIndex: 1,
-          }}
-        >
+      <div className="position-relative vh-100">
+        <div className="position-absolute top-0 start-0 w-100 h-100">
           <GraphCanvas graph={graph} setNetwork={setNetwork} />
         </div>
-        <DraggableItem id="form-card-draggable" position={formCardPosition}>
-          <FormCard setGraph={setGraph} />
-        </DraggableItem>
-        <DraggableItem id="search-node-draggable" position={searchNodePosition}>
-          <SearchNode graph={graph} network={network} />
-        </DraggableItem>
+        <div className="position-relative" style={{ zIndex: 10 }}>
+          <DraggableItem id="form-card-draggable" position={formCardPosition}>
+            <FormCard setGraph={setGraph} />
+          </DraggableItem>
+          <DraggableItem
+            id="search-node-draggable"
+            position={searchNodePosition}
+          >
+            <SearchNode graph={graph} network={network} />
+          </DraggableItem>
+        </div>
       </div>
     </DndContext>
   );
