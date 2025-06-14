@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from "react";
 import {
   useCreateGraphMutation,
   useGetGraphsQuery,
-} from '../redux/api/graphApi';
-import toast from 'react-hot-toast';
-import GraphCard from './GraphCard';
-import MetaData from './MetaData';
+} from "../redux/api/graphApi";
+import toast from "react-hot-toast";
+import GraphCard from "./GraphCard";
+import MetaData from "./MetaData";
 
 export default function CreateGraph() {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
+  const fileInputRef = useRef(null);
 
   const [uploadGraph, { isLoading, error, isSuccess }] =
     useCreateGraphMutation();
@@ -21,30 +22,33 @@ export default function CreateGraph() {
     e.preventDefault();
 
     if (!name || !description || !file) {
-      toast.error('Please fill all fields');
+      toast.error("Please fill all fields");
       return;
     }
 
     const formData = new FormData();
-    formData.append('name', name);
-    formData.append('description', description);
-    formData.append('file', file);
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("file", file);
 
     uploadGraph(formData);
 
-    setName('');
-    setDescription('');
+    setName("");
+    setDescription("");
     setFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   useEffect(() => {
     if (error) {
       console.log(error);
-      toast.error('Error creating graph');
+      toast.error(error?.data?.message);
     }
 
     if (isSuccess) {
-      toast.success('Graph created successfully');
+      toast.success("Graph created successfully");
     }
   }, [isSuccess, error]);
 
@@ -81,6 +85,7 @@ export default function CreateGraph() {
               File
             </label>
             <input
+              ref={fileInputRef}
               type="file"
               className="form-control"
               id="file"
@@ -93,7 +98,7 @@ export default function CreateGraph() {
             className="btn btn-primary"
             disabled={isLoading}
           >
-            {isLoading ? 'Creating...' : 'Create Graph'}
+            {isLoading ? "Creating..." : "Create Graph"}
           </button>
         </form>
         {isLoadingGraphs ? (
