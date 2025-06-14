@@ -32,7 +32,7 @@ export default function SearchNode({ graph, network }) {
             style={{ borderColor: "#0070D2" }}
           >
             <option value="">Select a node</option>
-            {graph?.nodes.map((node) => (
+            {graph?.nodes?.map((node) => (
               <option key={node.id} value={node.id}>
                 {node.label}
               </option>

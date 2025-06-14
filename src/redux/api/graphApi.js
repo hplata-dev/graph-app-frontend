@@ -6,7 +6,7 @@ export const graphApi = createApi({
   tagTypes: ["Graph", "Graphs"],
   endpoints: (builder) => ({
     getGraph: builder.query({
-      query: (id) => `/graph/${id}`,
+      query: (id) => `/graphs/${id}`,
       providesTags: ["Graph"],
     }),
     getGraphs: builder.query({
@@ -15,14 +15,14 @@ export const graphApi = createApi({
     }),
     deleteGraph: builder.mutation({
       query: (id) => ({
-        url: `/graph/${id}`,
+        url: `/graphs/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Graph", "Graphs"],
     }),
     createGraph: builder.mutation({
       query: (body) => ({
-        url: "/graph",
+        url: "/graphs",
         method: "POST",
         body,
       }),
@@ -30,7 +30,7 @@ export const graphApi = createApi({
     }),
     updateGraph: builder.mutation({
       query: ({ id, name, description }) => ({
-        url: `/graph/${id}`,
+        url: `/graphs/${id}`,
         method: "PUT",
         body: { name, description },
       }),

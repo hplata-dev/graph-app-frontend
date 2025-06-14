@@ -21,8 +21,8 @@ export default function GraphCanvas({ graph, setNetwork }) {
         },
       },
       scaling: {
-        min: 15,
-        max: 100,
+        min: 20,
+        max: 120,
       },
       font: {
         color: "#222222",
@@ -70,7 +70,7 @@ export default function GraphCanvas({ graph, setNetwork }) {
         springLength: 200,
         springConstant: 0.001,
       },
-      stabilization: { iterations: 250 },
+      stabilization: { iterations: 10 },
     },
     interaction: {
       hover: true,

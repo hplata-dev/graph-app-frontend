@@ -29,7 +29,7 @@ export default function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
+            <ul className="navbar-nav me-auto">
               <li className="nav-item">
                 <Link
                   className={`nav-link ${
@@ -51,6 +51,9 @@ export default function Navbar() {
                 </Link>
               </li>
             </ul>
+            <div className="text-white opacity-75 d-none d-lg-block">
+              DET-DIAS-Enterprise API & Integration Services
+            </div>
           </div>
         </div>
       </nav>
